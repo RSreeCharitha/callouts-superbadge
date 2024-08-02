@@ -4,7 +4,8 @@ global class WellnessJourneyRewardsBatch implements Database.Batchable<sObject>,
     
         Date startDate = getStartDate();                
         Date endDate = getEndDate();
-
+        system.debug(startDate); 
+		system.debug(endDate);
         String query = 'SELECT Id,Name,OwnerId, Owner.Name, Owner.Email, Owner.Username FROM Wellness_Journey__c WHERE Status__c = \'Complete\' AND Completion_Date__c >= :startDate AND Completion_Date__c <= :endDate ORDER BY OwnerId, Completion_Date__c';
         return Database.getQueryLocator(query);
     }
@@ -37,7 +38,7 @@ global class WellnessJourneyRewardsBatch implements Database.Batchable<sObject>,
                 //Add to array
                 usersListMap.add(userObj);
             }
-            
+             
         }
         
         //Serialize JSON
@@ -53,8 +54,6 @@ global class WellnessJourneyRewardsBatch implements Database.Batchable<sObject>,
     global void finish(Database.BatchableContext BC) {
         // Perform finish operations
     }
-
-
 
     // Helper methods to get the start and end date of the quarter
     private Date getStartDate() {
